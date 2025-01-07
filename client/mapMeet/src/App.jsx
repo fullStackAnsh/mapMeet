@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { Icon } from "leaflet"; 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -15,6 +15,10 @@ L.Icon.Default.mergeOptions({
 
 function App() {
   const [position, setPosition] = useState(null); // Store user coordinates
+  const customIcon = new Icon({
+    iconUrl:"./placeholder.png",
+    iconSize:[38,38]
+  });
 
   useEffect(() => {
     // Get user's current location
@@ -36,12 +40,12 @@ function App() {
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       {position ? (
-        <MapContainer center={position} zoom={13} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position}>
+          <Marker position={position} icon={customIcon}>
             <Popup>You are here!</Popup>
           </Marker>
         </MapContainer>
